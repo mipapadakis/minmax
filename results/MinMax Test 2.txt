@@ -1,0 +1,465 @@
+MinMax Test Version 2.0
+
+/////////////////////////////////////////////////////////
+Algorithm:
+	//START = first index of subarray that needs sorting
+	//END = last index of subarray that needs sorting
+	
+	START = 0
+	END = lastIndex
+	while (START <= END) {
+		maxSize = 1 //How many duplicates of the max exist
+		addedMax = 0 //How many numbers have been setLast() 
+		minSize = 1 //How many duplicates of the min exist
+		i = START
+		while ( i<=END-addedMax){
+			if(a[i] >= a[END]) 
+				if(a[i] == a[END]) maxSize++
+				else maxSize = 1
+				setLast(i) //a[i] toPosition a[END]
+				addedMax++
+				continue //don't do i++
+			if(a[i] <= a[START]) 
+				if(a[i] == a[START]) minSize++
+				else minSize = 1
+				setFirst(i) //a[i] toPosition a[START]
+			i++
+		}
+		START = START + minSize
+		END = END - maxSize + 1
+	}
+
+/////////////////////////////////////////////////////////
+
+EXAMPLE: [ 3, 8, 9, 7, 4, 3, 2, 9, 5, 7, 2, 1, 4, 8, 3]
+START = 0
+END = lastIndex = 14
+i: [                  table                     ]
+0: [03, 8, 9, 7, 4, 3, 2, 9, 5, 7, 2, 1, 4, 8, 3] 
+0: [08, 9, 7, 4, 3, 2, 9, 5, 7, 2, 1, 4, 8, 3,>3] maxSize = 2, addedMax = 1
+0: [09, 7, 4, 3, 2, 9, 5, 7, 2, 1, 4, 8, 3, 3,>8] maxSize = 1, addedMax = 2
+0: [07, 4, 3, 2, 9, 5, 7, 2, 1, 4, 8, 3, 3, 8,>9] maxSize = 1, addedMax = 3
+1: [ 7,04, 3, 2, 9, 5, 7, 2, 1, 4, 8, 3, 3, 8, 9] 
+2: [>4, 7,03, 2, 9, 5, 7, 2, 1, 4, 8, 3, 3, 8, 9] minSize = 1
+3: [>3, 4, 7,02, 9, 5, 7, 2, 1, 4, 8, 3, 3, 8, 9] minSize = 1
+4: [>2, 3, 4, 7,09, 5, 7, 2, 1, 4, 8, 3, 3, 8, 9] minSize = 1
+4: [ 2, 3, 4, 7,05, 7, 2, 1, 4, 8, 3, 3, 8, 9,>9] maxSize = 2, addedMax = 4
+5: [ 2, 3, 4, 7, 5,07, 2, 1, 4, 8, 3, 3, 8, 9, 9] 
+6: [ 2, 3, 4, 7, 5, 7,02, 1, 4, 8, 3, 3, 8, 9, 9] 
+7: [>2, 2, 3, 4, 7, 5, 7,01, 4, 8, 3, 3, 8, 9, 9] minSize = 2
+8: [>1, 2, 2, 3, 4, 7, 5, 7,04, 8, 3, 3, 8, 9, 9] minSize = 1
+9: [ 1, 2, 2, 3, 4, 7, 5, 7, 4,08, 3, 3, 8, 9, 9]
+10:[ 1, 2, 2, 3, 4, 7, 5, 7, 4, 8,03, 3, 8, 9, 9] 
+! Stops at (END - addedMax) because these numbers have been used by setLast() during this loop, therefore if checked 
+i) they are close or equal to max => no need to setFirst()
+ii)they are sorted amongst each other => no need to setLast()
+		
+/////////////////////////////////////////////////////////
+
+TEST RESULTS: ARRAY_SIZE = 4000
+
+/////////////////////////////////////////////////////////
+
+TEST 123SHUFFLED:
+Sorting 20 tables, each containing the integers [1,2,3,...,4000], shuffled.
+Avg running times for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 38.30
+•  min-max 2 sort: 33.60
+•      quick sort: 3.90
+•      merge sort: 3.15
+•     select sort: 13.30
+•     insert sort: 6.25
+•   counting sort: 0.75
+•     bubble sort: 87.50
+•      shell sort: 0.80
+•      cycle sort: 43.75
+•     shaker sort: 49.20
+•     strand sort: 38.30
+•   patience sort: 5.45
+•       comb sort: 1.55
+•      gnome sort: 30.45
+• pigeonhole sort: 0.80
+•    pancake sort: 39.85
+
+TEST 112233SHUFFLED:
+Sorting 20 tables, each containing the integers [1,1,2,2,3,3, ...,2000,2000], shuffled.
+Avg running times for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 31.55
+•  min-max 2 sort: 19.50
+•      quick sort: 0.80
+•      merge sort: 0.80
+•     select sort: 12.50
+•     insert sort: 3.90
+•   counting sort: 0.75
+•     bubble sort: 81.25
+•      shell sort: 0.80
+•      cycle sort: 42.15
+•     shaker sort: 44.55
+•     strand sort: 35.15
+•   patience sort: 1.55
+•       comb sort: 0.75
+•      gnome sort: 28.90
+• pigeonhole sort: 0.00
+•    pancake sort: 42.20
+
+TEST RANDOM:
+Sorting 20 tables, each containing 4000 random positive integers (max: 10000).
+Avg running times for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 22.21
+•  min-max 2 sort: 19.74
+•      quick sort: 1.63
+•      merge sort: 0.79
+•     select sort: 12.37
+•     insert sort: 4.95
+•   counting sort: 0.00
+•     bubble sort: 78.89
+•      shell sort: 0.84
+•      cycle sort: 42.74
+•     shaker sort: 46.84
+•     strand sort: 35.37
+•   patience sort: 4.11
+•       comb sort: 1.68
+•      gnome sort: 27.95
+• pigeonhole sort: 0.79
+•    pancake sort: 40.32
+
+TEST RANDOM:
+Sorting 20 tables, each containing 4000 random positive integers (max: 1000).
+Avg running times for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 30.42
+•  min-max 2 sort: 15.63
+•      quick sort: 1.63
+•      merge sort: 0.79
+•     select sort: 12.37
+•     insert sort: 4.11
+•   counting sort: 0.00
+•     bubble sort: 78.89
+•      shell sort: 0.84
+•      cycle sort: 41.11
+•     shaker sort: 44.42
+•     strand sort: 37.79
+•   patience sort: 1.68
+•       comb sort: 0.79
+•      gnome sort: 27.16
+• pigeonhole sort: 0.00
+•    pancake sort: 45.21
+
+TEST RANDOM:
+Sorting 20 tables, each containing 4000 random positive integers (max: 100).
+Avg running times for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 53.42
+•  min-max 2 sort: 4.11
+•      quick sort: 0.84
+•      merge sort: 0.84
+•     select sort: 11.47
+•     insert sort: 4.11
+•   counting sort: 0.00
+•     bubble sort: 74.00
+•      shell sort: 0.84
+•      cycle sort: 43.58
+•     shaker sort: 45.21
+•     strand sort: 29.58
+•   patience sort: 2.47
+•       comb sort: 0.84
+•      gnome sort: 24.68
+• pigeonhole sort: 0.00
+•    pancake sort: 35.32
+
+TEST RANDOM:
+Sorting 20 tables, each containing 4000 random positive integers (max: 10).
+Avg running times for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 339.11
+•  min-max 2 sort: 3.00
+•      quick sort: 0.00
+•      merge sort: 0.84
+•     select sort: 11.53
+•     insert sort: 4.11
+•   counting sort: 0.00
+•     bubble sort: 66.58
+•      shell sort: 0.00
+•      cycle sort: 36.89
+•     shaker sort: 39.42
+•     strand sort: 0.84
+•   patience sort: 6.58
+•       comb sort: 0.00
+•      gnome sort: 21.37
+• pigeonhole sort: 0.00
+•    pancake sort: 32.05
+
+TEST RANDOM:
+Sorting 20 tables, each containing 4000 random positive integers (max: 5).
+Avg running times for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 648.00
+•  min-max 2 sort: 3.26
+•      quick sort: 0.00
+•      merge sort: 0.84
+•     select sort: 11.53
+•     insert sort: 4.11
+•   counting sort: 0.00
+•     bubble sort: 64.11
+•      shell sort: 0.00
+•      cycle sort: 32.89
+•     shaker sort: 38.63
+•     strand sort: 0.84
+•   patience sort: 10.68
+•       comb sort: 0.00
+•      gnome sort: 20.53
+• pigeonhole sort: 0.00
+•    pancake sort: 31.26
+
+TEST 123:
+Sorting the table [1,2,3,...,4000], 20 times
+Running time for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 26.32
+•  min-max 2 sort: 16.42
+•      quick sort: 0.84
+•      merge sort: 0.84
+•     select sort: 11.47
+•     insert sort: 0.00
+•   counting sort: 0.00
+•     bubble sort: 0.00
+•      shell sort: 0.00
+•      cycle sort: 7.42
+•     shaker sort: 0.00
+•     strand sort: 0.00
+•   patience sort: 42.74
+•       comb sort: 0.84
+•      gnome sort: 0.00
+• pigeonhole sort: 0.00
+•    pancake sort: 11.47
+
+TEST 321:
+Sorting the table [4000, 3999, ...., 1], 20 times
+Running time for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 29.63
+•  min-max 2 sort: 21.37
+•      quick sort: 0.84
+•      merge sort: 0.79
+•     select sort: 11.53
+•     insert sort: 8.21
+•   counting sort: 0.00
+•     bubble sort: 85.53
+•      shell sort: 0.00
+•      cycle sort: 13.95
+•     shaker sort: 74.00
+•     strand sort: 78.26
+•   patience sort: 0.00
+•       comb sort: 0.00
+•      gnome sort: 56.21
+• pigeonhole sort: 0.00
+•    pancake sort: 11.53
+
+		
+/////////////////////////////////////////////////////////
+
+TEST RESULTS: ARRAY_SIZE = 400
+
+/////////////////////////////////////////////////////////
+
+TEST 123SHUFFLED:
+Sorting 20 tables, each containing the integers [1,2,3,...,400], shuffled.
+Avg running times for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 3.15
+•  min-max 2 sort: 2.20
+•      quick sort: 2.05
+•      merge sort: 0.50
+•     select sort: 3.15
+•     insert sort: 2.20
+•   counting sort: 0.15
+•     bubble sort: 2.45
+•      shell sort: 0.55
+•      cycle sort: 3.45
+•     shaker sort: 2.15
+•     strand sort: 1.15
+•   patience sort: 0.75
+•       comb sort: 0.60
+•      gnome sort: 3.65
+• pigeonhole sort: 0.10
+•    pancake sort: 1.70
+
+TEST 112233SHUFFLED:
+Sorting 20 tables, each containing the integers [1,1,2,2,3,3, ...,200,200], shuffled.
+Avg running times for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 0.35
+•  min-max 2 sort: 0.20
+•      quick sort: 0.10
+•      merge sort: 0.05
+•     select sort: 0.40
+•     insert sort: 0.05
+•   counting sort: 0.05
+•     bubble sort: 0.65
+•      shell sort: 0.20
+•      cycle sort: 2.00
+•     shaker sort: 1.50
+•     strand sort: 0.85
+•   patience sort: 0.30
+•       comb sort: 0.40
+•      gnome sort: 0.30
+• pigeonhole sort: 0.65
+•    pancake sort: 0.85
+
+TEST RANDOM:
+Sorting 20 tables, each containing 400 random positive integers (max: 10000).
+Avg running times for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 2.16
+•  min-max 2 sort: 3.84
+•      quick sort: 0.11
+•      merge sort: 0.47
+•     select sort: 1.16
+•     insert sort: 0.89
+•   counting sort: 0.21
+•     bubble sort: 1.37
+•      shell sort: 0.26
+•      cycle sort: 2.11
+•     shaker sort: 2.26
+•     strand sort: 0.32
+•   patience sort: 0.47
+•       comb sort: 0.47
+•      gnome sort: 1.21
+• pigeonhole sort: 0.37
+•    pancake sort: 0.95
+
+TEST RANDOM:
+Sorting 20 tables, each containing 400 random positive integers (max: 1000).
+Avg running times for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 0.32
+•  min-max 2 sort: 0.26
+•      quick sort: 0.21
+•      merge sort: 0.05
+•     select sort: 0.16
+•     insert sort: 0.05
+•   counting sort: 0.11
+•     bubble sort: 0.68
+•      shell sort: 0.00
+•      cycle sort: 0.42
+•     shaker sort: 0.47
+•     strand sort: 0.26
+•   patience sort: 0.05
+•       comb sort: 0.05
+•      gnome sort: 0.37
+• pigeonhole sort: 0.11
+•    pancake sort: 0.47
+
+TEST RANDOM:
+Sorting 20 tables, each containing 400 random positive integers (max: 100).
+Avg running times for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 0.42
+•  min-max 2 sort: 0.21
+•      quick sort: 0.05
+•      merge sort: 0.11
+•     select sort: 0.11
+•     insert sort: 0.05
+•   counting sort: 0.05
+•     bubble sort: 0.58
+•      shell sort: 0.00
+•      cycle sort: 0.42
+•     shaker sort: 0.42
+•     strand sort: 0.26
+•   patience sort: 0.05
+•       comb sort: 0.05
+•      gnome sort: 0.26
+• pigeonhole sort: 0.11
+•    pancake sort: 0.37
+
+TEST RANDOM:
+Sorting 20 tables, each containing 400 random positive integers (max: 10).
+Avg running times for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 0.79
+•  min-max 2 sort: 0.05
+•      quick sort: 0.05
+•      merge sort: 0.11
+•     select sort: 0.16
+•     insert sort: 0.05
+•   counting sort: 0.05
+•     bubble sort: 0.53
+•      shell sort: 0.00
+•      cycle sort: 0.42
+•     shaker sort: 0.37
+•     strand sort: 0.11
+•   patience sort: 0.05
+•       comb sort: 0.05
+•      gnome sort: 0.26
+• pigeonhole sort: 0.00
+•    pancake sort: 0.32
+
+TEST RANDOM:
+Sorting 20 tables, each containing 400 random positive integers (max: 5).
+Avg running times for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 1.21
+•  min-max 2 sort: 0.05
+•      quick sort: 0.00
+•      merge sort: 0.16
+•     select sort: 0.16
+•     insert sort: 0.05
+•   counting sort: 0.00
+•     bubble sort: 0.58
+•      shell sort: 0.00
+•      cycle sort: 0.37
+•     shaker sort: 0.37
+•     strand sort: 0.05
+•   patience sort: 0.11
+•       comb sort: 0.05
+•      gnome sort: 0.21
+• pigeonhole sort: 0.00
+•    pancake sort: 0.37
+
+TEST 123:
+Sorting the table [1,2,3,...,400], 20 times
+Running time for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 0.32
+•  min-max 2 sort: 0.21
+•      quick sort: 0.16
+•      merge sort: 0.11
+•     select sort: 0.11
+•     insert sort: 0.00
+•   counting sort: 0.00
+•     bubble sort: 0.00
+•      shell sort: 0.05
+•      cycle sort: 0.05
+•     shaker sort: 0.00
+•     strand sort: 0.05
+•   patience sort: 0.42
+•       comb sort: 0.05
+•      gnome sort: 0.00
+• pigeonhole sort: 0.00
+•    pancake sort: 0.11
+
+TEST 321:
+Sorting the table [400, 399, ...., 1], 20 times
+Running time for each algorithm (in milliseconds):
+
+•  min-max 1 sort: 0.37
+•  min-max 2 sort: 0.21
+•      quick sort: 0.16
+•      merge sort: 0.11
+•     select sort: 0.11
+•     insert sort: 0.11
+•   counting sort: 0.05
+•     bubble sort: 1.05
+•      shell sort: 0.00
+•      cycle sort: 0.16
+•     shaker sort: 0.79
+•     strand sort: 0.89
+•   patience sort: 0.00
+•       comb sort: 0.05
+•      gnome sort: 0.53
+• pigeonhole sort: 0.00
+•    pancake sort: 0.11
+
