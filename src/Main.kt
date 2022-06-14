@@ -26,7 +26,6 @@ fun test123shuffled(){
     println("TEST 123SHUFFLED:\nSorting $LIST_SIZE tables, each containing the integers [1,2,3,...,$ARRAY_SIZE], shuffled.")
     println("Avg running times for each algorithm (in milliseconds):\n")
     callSortingAlgorithms(lists)
-    println()
 }
 
 fun test112233Shuffled(){
@@ -43,7 +42,6 @@ fun test112233Shuffled(){
     println("TEST 112233SHUFFLED:\nSorting $LIST_SIZE tables, each containing the integers [1,1,2,2,3,3, ...,${ARRAY_SIZE/2},${ARRAY_SIZE/2}], shuffled.")
     println("Avg running times for each algorithm (in milliseconds):\n")
     callSortingAlgorithms(lists)
-    println()
 }
 
 fun testRandomShuffled(max: Int){
@@ -58,7 +56,6 @@ fun testRandomShuffled(max: Int){
     println("TEST RANDOM SHUFFLED:\nFirst creating an array of $ARRAY_SIZE random positive integers (max: $max), then sorting $LIST_SIZE tables, each containing a shuffled version of that array.")
     println("Avg running times for each algorithm (in milliseconds):\n")
     callSortingAlgorithms(lists)
-    println()
 }
 
 fun testRandom(max: Int){
@@ -75,7 +72,6 @@ fun testRandom(max: Int){
     println("TEST RANDOM:\nSorting $LIST_SIZE tables, each containing $ARRAY_SIZE random positive integers (max: $max).")
     println("Avg running times for each algorithm (in milliseconds):\n")
     callSortingAlgorithms(lists)
-    println()
 }
 
 fun test123(){
@@ -87,7 +83,6 @@ fun test123(){
     println("TEST 123:\nSorting the table [1,2,3,...,$ARRAY_SIZE], $LIST_SIZE times")
     println("Running time for each algorithm (in milliseconds):\n")
     callSortingAlgorithms(lists)
-    println()
 }
 
 fun test321(){
@@ -99,7 +94,6 @@ fun test321(){
     println("TEST 321:\nSorting the table [$ARRAY_SIZE, ${ARRAY_SIZE-1}, ...., 1], $LIST_SIZE times")
     println("Running time for each algorithm (in milliseconds):\n")
     callSortingAlgorithms(lists)
-    println()
 }
 
 fun callSortingAlgorithms(lists: ArrayList<ArrayList<Int>>){
@@ -120,6 +114,7 @@ fun callSortingAlgorithms(lists: ArrayList<ArrayList<Int>>){
     println("•      gnome sort: ${String.format("%.2f",calculateAverageRunningTime(lists){ Sort.gnomeSort(it) })}")
     println("• pigeonhole sort: ${String.format("%.2f",calculateAverageRunningTime(lists){ Sort.pigeonholeSort(it) })}")
     println("•    pancake sort: ${String.format("%.2f",calculateAverageRunningTime(lists){ Sort.pancakeSort(it) })}")
+    println()
 }
 
 fun List<Int>.isSorted(): Boolean{
